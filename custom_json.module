@@ -1,0 +1,8 @@
+<?php
+/**
+ * Implements hook_uninstall().
+ */
+function custom_json_uninstall()
+{
+  \Drupal::configFactory()->getEditable('system.site')->clear('siteapikey')->save();
+}

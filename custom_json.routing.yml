@@ -1,0 +1,6 @@
+custom_json.node_json_api:
+  path: '/page_json/{siteapikey}/{nid}'
+  defaults:
+    _controller: '\Drupal\custom_json\Controller\CustomJsonApiController::content_json'
+  requirements:
+    _permission: 'access content'
