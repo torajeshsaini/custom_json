@@ -24,9 +24,8 @@ class CustomJsonApiController extends ControllerBase
     if (!is_numeric($nid)) {
       throw new AccessDeniedHttpException();
     }
-
-    $nodeData = $this->get_node_data($nid);
-    return new JsonResponse(['data' => $nodeData->toArray()]);
+    
+    return new JsonResponse([ 'data' => $this->getData($nid), 'method' => 'GET', 'status'=> 200]);
   }
 
   /**
@@ -45,8 +44,7 @@ class CustomJsonApiController extends ControllerBase
    * @param $nid
    * @return $node
    */
-  function get_node_data($nid)
-  {
+  public function getData($nid) {
 
     $valid_node_id = \Drupal::entityQuery('node')
       ->condition('type', 'page')
@@ -59,10 +57,9 @@ class CustomJsonApiController extends ControllerBase
       $user = User::load(\Drupal::currentUser()->id());
       $access_check = $node->access('view', $user);
     }
-
     if (!$access_check) {
       throw new AccessDeniedHttpException();
     }
-    return $node;
+    return $node->toArray();
   }
 }
